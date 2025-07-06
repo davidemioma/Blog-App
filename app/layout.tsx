@@ -7,6 +7,9 @@ import { Toaster } from "@/components/ui/sonner";
 import { Geist, Geist_Mono } from "next/font/google";
 import QueryProvider from "@/providers/query-providers";
 
+// Check if Clerk environment variables are available
+const isClerkAvailable = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,23 +30,28 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <QueryProvider>
-            <Toaster richColors />
+  const content = (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <QueryProvider>
+          <Toaster richColors />
 
-            <Navbar />
+          {isClerkAvailable && <Navbar />}
 
-            {children}
+          {children}
 
-            <Footer />
-          </QueryProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+          <Footer />
+        </QueryProvider>
+      </body>
+    </html>
   );
+
+  // Only wrap with ClerkProvider if environment variables are available
+  if (isClerkAvailable) {
+    return <ClerkProvider>{content}</ClerkProvider>;
+  }
+
+  return content;
 }
