@@ -82,6 +82,8 @@ export default function CommentForm({
     mutate(data);
   };
 
+  if (!user) return null;
+
   return (
     <div className="shadow-lg bg-background/80 backdrop-blur-sm rounded-lg border-0 p-6">
       <div className="mb-4">
