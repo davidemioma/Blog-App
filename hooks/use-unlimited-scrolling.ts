@@ -25,11 +25,10 @@ const useUnlimitedScrolling = <T>({ key, queryFn }: Props<T>) => {
   } = useInfiniteQuery({
     queryKey: typeof key === "string" ? [key] : [...key],
     queryFn: queryFn,
-    initialPageParam: 0,
+    initialPageParam: 1,
     getNextPageParam: (_, pages) => {
       return pages.length + 1;
     },
-    initialData: { pages: [], pageParams: [1] },
   });
 
   return {
