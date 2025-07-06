@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { CommentType } from "@/types";
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import CommentVote from "./comment-vote";
 import { getReplies } from "@/lib/data/comment";
 import { Button } from "@/components/ui/button";
@@ -28,9 +28,14 @@ import {
 interface CommentCardProps {
   comment: CommentType;
   queryKey: string[];
+  isReply?: boolean;
 }
 
-export default function CommentCard({ comment, queryKey }: CommentCardProps) {
+export default function CommentCard({
+  comment,
+  queryKey,
+  isReply,
+}: CommentCardProps) {
   const queryClient = useQueryClient();
 
   const [showEditForm, setShowEditForm] = useState(false);
@@ -93,7 +98,12 @@ export default function CommentCard({ comment, queryKey }: CommentCardProps) {
   });
 
   return (
-    <div className="shadow-sm border-0 bg-background/60 backdrop-blur-sm hover:shadow-md transition-all duration-200">
+    <div
+      className={cn(
+        "border-0 bg-background/60 transition-all duration-200",
+        !isReply && "shadow-sm backdrop-blur-sm hover:shadow-md"
+      )}
+    >
       <div className="p-4">
         <div className="flex items-start gap-3 mb-3">
           <Avatar className="h-8 w-8">
@@ -226,6 +236,7 @@ export default function CommentCard({ comment, queryKey }: CommentCardProps) {
                         key={reply.id}
                         comment={reply}
                         queryKey={["get-replies", comment.id]}
+                        isReply
                       />
                     ))}
                   </div>
