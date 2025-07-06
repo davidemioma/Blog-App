@@ -13,8 +13,10 @@ import useUnlimitedScrolling from "@/hooks/use-unlimited-scrolling";
 const PostSkeleton = () => (
   <div className="space-y-3">
     <Skeleton className="h-48 w-full rounded-lg" />
+
     <div className="space-y-2">
       <Skeleton className="h-4 w-3/4" />
+
       <Skeleton className="h-4 w-1/2" />
     </div>
   </div>
@@ -67,7 +69,7 @@ function HomeContent() {
     return <LoadingSkeleton />;
   }
 
-  if (!isLoading && posts && posts.length === 0) {
+  if (!isLoading && !isError && posts && posts.length === 0) {
     return (
       <EmptyState
         title="No posts yet"
@@ -78,7 +80,7 @@ function HomeContent() {
   }
 
   return (
-    <main className="w-full p-5">
+    <main className="w-full min-h-[calc(100vh-64px)] p-5">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {posts.map((post, i) => {
           if (i === posts.length - 1) {
