@@ -36,7 +36,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+    <nav className="w-full border-b bg-white sticky top-0 z-50">
       <div className="container mx-auto flex h-16 items-center justify-between gap-3 px-4 sm:px-8">
         <Link href="/" className="hidden md:flex shrink-0 items-center gap-2">
           <Image src="/next.svg" alt="Blog App Logo" width={32} height={32} />
